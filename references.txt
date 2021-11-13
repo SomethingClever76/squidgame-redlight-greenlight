@@ -1,0 +1,3 @@
+https://www.freecodecamp.org/news/create-a-squid-game-javascript-game-with-three-js/
+
+https://threejs.org/docs/
