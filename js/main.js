@@ -21,6 +21,7 @@ const endPosition = -startPosition;
 const text = document.querySelector(".text");
 const timeLimit = 10;
 let gameStatus = "loading";
+let isLookingBackward = true;
 
 function createCube(size, positionX, rotY = 0, color = 0xfbc851) {
   const geometry = new THREE.BoxGeometry(size.w, size.h, size.d);
@@ -53,10 +54,12 @@ class Doll {
 
   lookBackward() {
     gsap.to(this.doll.rotation, { y: -3.15, duration: 0.45 });
+    setTimeout(() => (isLookingBackward = true), 150);
   }
 
   lookForward() {
     gsap.to(this.doll.rotation, { y: 0, duration: 0.45 });
+    setTimeout(() => (isLookingBackward = false), 450);
   }
 
   async start() {
@@ -100,7 +103,19 @@ class Player {
     this.playerInfo.velocity = 0.03;
   }
 
+  check() {
+    if (this.playerInfo.velocity > 0 && !isLookingBackward) {
+      text.innerText = "You Lose!";
+      gameStatus = "over";
+    }
+    if (this.playerInfo.positionX < endPosition + 0.4) {
+      text.innerText = "You Win!";
+      gameStatus = "over";
+    }
+  }
+
   update() {
+    this.check();
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
   }
@@ -131,11 +146,20 @@ function startGame() {
   progressBar.position.y = 3.35;
   gsap.to(progressBar.scale, { x: 0, duration: timeLimit, ease: "none" });
   doll.start();
+  setTimeout(() => {
+    if (gameStatus != "over") {
+      gameStatus = "over";
+      text.innerText = "Your Time Ran Out!";
+    }
+  }, timeLimit * 1000);
 }
 
 init();
 
 function animate() {
+  if (gameStatus == "over") {
+    return;
+  }
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   player.update();
