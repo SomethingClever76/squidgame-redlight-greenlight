@@ -38,7 +38,7 @@ class Doll {
     loader.load("../models/scene.gltf", (gltf) => {
       scene.add(gltf.scene);
       gltf.scene.scale.set(0.4, 0.4, 0.4);
-      gltf.scene.position.set(0, -1, 0);
+      gltf.scene.position.set(0, -1.3, 0);
       this.doll = gltf.scene;
     });
   }
@@ -88,6 +88,10 @@ class Player {
     this.playerInfo.positionX -= this.playerInfo.velocity;
     this.player.position.x = this.playerInfo.positionX;
   }
+
+  stop() {
+    gsap.to(this.playerInfo, { velocity: 0, duration: 0.1 });
+  }
 }
 
 const player = new Player();
@@ -112,3 +116,15 @@ function onWindowResize() {
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
+
+window.addEventListener("keydown", (e) => {
+  if (e.key == "ArrowLeft") {
+    player.run();
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key == "ArrowLeft") {
+    player.stop();
+  }
+});
