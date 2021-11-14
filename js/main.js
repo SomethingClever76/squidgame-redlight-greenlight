@@ -15,8 +15,12 @@ renderer.setClearColor(0xb7c3f3, 1);
 const light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
+// global variables
 const startPosition = 3;
 const endPosition = -startPosition;
+const text = document.querySelector(".text");
+const timeLimit = 10;
+let gameStatus = "loading";
 
 function createCube(size, positionX, rotY = 0, color = 0xfbc851) {
   const geometry = new THREE.BoxGeometry(size.w, size.h, size.d);
@@ -107,11 +111,29 @@ class Player {
 }
 
 const player = new Player();
-
 let doll = new Doll();
-setTimeout(() => {
+
+async function init() {
+  await delay(1000);
+  text.innerText = "Starting in 3";
+  await delay(1000);
+  text.innerText = "Starting in 2";
+  await delay(1000);
+  text.innerText = "Starting in 1";
+  await delay(1000);
+  text.innerText = "Go!!!";
+  startGame();
+}
+
+function startGame() {
+  gameStatus = "started";
+  let progressBar = createCube({ w: 5, h: 0.1, d: 1 }, 0);
+  progressBar.position.y = 3.35;
+  gsap.to(progressBar.scale, { x: 0, duration: timeLimit, ease: "none" });
   doll.start();
-}, 1000);
+}
+
+init();
 
 function animate() {
   requestAnimationFrame(animate);
@@ -130,6 +152,9 @@ function onWindowResize() {
 }
 
 window.addEventListener("keydown", (e) => {
+  if (gameStatus != "started") {
+    return;
+  }
   if (e.key == "ArrowLeft") {
     player.run();
   }
