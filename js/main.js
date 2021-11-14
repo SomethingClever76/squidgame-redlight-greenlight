@@ -15,7 +15,6 @@ renderer.setClearColor(0xb7c3f3, 1);
 const light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-// global variables
 const startPosition = 3;
 const endPosition = -startPosition;
 
@@ -45,12 +44,10 @@ class Doll {
   }
 
   lookBackward() {
-    // this.doll.rotation.y = -3.15;
     gsap.to(this.doll.rotation, { y: -3.15, duration: 0.45 });
   }
 
   lookForward() {
-    // this.doll.rotation.y = 0;
     gsap.to(this.doll.rotation, { y: 0, duration: 0.45 });
   }
 }
@@ -68,6 +65,33 @@ function createTrack() {
 
 createTrack();
 
+class Player {
+  constructor() {
+    const geometry = new THREE.SphereGeometry(0.3, 32, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.position.z = 1;
+    sphere.position.x = startPosition;
+    scene.add(sphere);
+    this.player = sphere;
+    this.playerInfo = {
+      positionX: startPosition,
+      velocity: 0,
+    };
+  }
+
+  run() {
+    this.playerInfo.velocity = 0.03;
+  }
+
+  update() {
+    this.playerInfo.positionX -= this.playerInfo.velocity;
+    this.player.position.x = this.playerInfo.positionX;
+  }
+}
+
+const player = new Player();
+
 let doll = new Doll();
 setTimeout(() => {
   doll.lookBackward();
@@ -76,6 +100,7 @@ setTimeout(() => {
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+  player.update();
 }
 animate();
 
