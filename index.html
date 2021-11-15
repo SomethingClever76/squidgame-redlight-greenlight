@@ -14,7 +14,19 @@
     <title>Red Light, Green Light</title>
   </head>
   <body>
+    <h1>
+      <span style="color: red">Red Light</span> /<span style="color: green">
+        Green Light</span
+      >
+    </h1>
     <p class="text">Loading...</p>
+    <p id="instructions" class="instructions">
+      ArrowLeft to move.<br />
+      Don't move when the doll is looking at you!
+    </p>
+    <a onClick="window.location.reload()" id="restart" class="restart"
+      >Restart</a
+    >
     <script src="js/three.min.js"></script>
     <script src="js/GLTFLoader.js"></script>
     <script src="js/gsap.min.js"></script>

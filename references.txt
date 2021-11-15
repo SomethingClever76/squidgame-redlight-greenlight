@@ -6,3 +6,13 @@ https://threejs.org/docs/
 https://sketchfab.com/3d-models/squid-game-giant-doll-7afd49dd07714651a6afa1fc4aac8576
 
 https://greensock.com/get-started/
+
+https://fontmeme.com/fonts/game-of-squids-font/
+
+https://www.geeksforgeeks.org/how-to-include-a-font-ttf-using-css/
+
+https://fdossena.com/?p=html5cool/buttons/i.frag
+
+https://www.w3schools.com/js/js_htmldom_css.asp
+
+https://stackoverflow.com/questions/29884654/button-that-refreshes-the-page-on-click

@@ -16,7 +16,7 @@ const light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
 // global variables
-const startPosition = 3;
+const startPosition = 4;
 const endPosition = -startPosition;
 const text = document.querySelector(".text");
 const timeLimit = 10;
@@ -46,8 +46,8 @@ class Doll {
   constructor() {
     loader.load("../models/scene.gltf", (gltf) => {
       scene.add(gltf.scene);
-      gltf.scene.scale.set(0.4, 0.4, 0.4);
-      gltf.scene.position.set(0, -1.3, 0);
+      gltf.scene.scale.set(0.27, 0.27, 0.27);
+      gltf.scene.position.set(0, -0.05, 0);
       this.doll = gltf.scene;
     });
   }
@@ -87,7 +87,7 @@ createTrack();
 class Player {
   constructor() {
     const geometry = new THREE.SphereGeometry(0.3, 32, 16);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const material = new THREE.MeshBasicMaterial({ color: 0x268793 });
     const sphere = new THREE.Mesh(geometry, material);
     sphere.position.z = 1;
     sphere.position.x = startPosition;
@@ -158,6 +158,8 @@ init();
 
 function animate() {
   if (gameStatus == "over") {
+    document.getElementById("instructions").style.display = "none";
+    document.getElementById("restart").style.display = "inline-block";
     return;
   }
   requestAnimationFrame(animate);
